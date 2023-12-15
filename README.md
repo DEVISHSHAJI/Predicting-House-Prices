@@ -3,20 +3,7 @@ Project Title: Predicting House Prices
 Project Overview:
 The goal of this project is to build a machine learning model that can predict house prices based on various features. You'll explore the dataset, perform data preprocessing, train a predictive model, and evaluate its performance.
 
-Dataset:
-You can use the Boston Housing dataset, which is available in the scikit-learn library. You can load it as follows:
 
-python
-Copy code
-from sklearn.datasets import load_boston
-import pandas as pd
-
-# Load the Boston Housing dataset
-boston = load_boston()
-
-# Create a DataFrame for easy manipulation
-data = pd.DataFrame(boston.data, columns=boston.feature_names)
-data['target'] = boston.target
 Project Steps:
 Data Exploration:
 
