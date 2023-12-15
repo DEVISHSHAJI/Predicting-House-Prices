@@ -4,8 +4,8 @@ Project Overview:
 The goal of this project is to build a machine learning model that can predict house prices based on various features. You'll explore the dataset, perform data preprocessing, train a predictive model, and evaluate its performance.
 
 
-Project Steps:
-Data Exploration:
+**Project Steps:**
+-Data Exploration:
 
 Understand the structure of the dataset.
 Check for missing values.
@@ -18,10 +18,10 @@ Explore feature engineering possibilities.
 Data Visualization:
 
 Create visualizations to better understand the relationships between different features and the target variable.
-Feature Selection:
+**Feature Selection:**
 
 Use statistical methods or machine learning techniques to select the most relevant features.
-Model Building:
+**Model Building:**
 
 Split the dataset into training and testing sets.
 Choose a regression algorithm (e.g., linear regression, decision tree, random forest) and train the model.
@@ -34,7 +34,7 @@ Hyperparameter Tuning (Optional):
 If you used a model with hyperparameters, perform tuning to optimize the model's performance.
 Documentation:
 
-Document your code with comments and a README file explaining the project, dataset, and steps taken.
+**Document your code with comments and a README file explaining the project, dataset, and steps taken**.
 Tools and Libraries:
 Python (NumPy, Pandas, Matplotlib, Seaborn)
 Scikit-learn for machine learning algorithms
@@ -42,9 +42,7 @@ Jupyter Notebook for code development and documentation
 GitHub Repository:
 Create a GitHub repository and organize your code and documentation. Make sure to include the dataset, Jupyter Notebook or Python script, and a README file explaining the project.
 
-Remember to commit your changes regularly and write meaningful commit messages. This project provides a good foundation for learning and practicing various aspects of data science, from data exploration to model evaluation. Feel free to customize and expand upon it based on your interests and skill level.
-
-
+Remember to commit your changes regularly and write meaningful commit messages. This project provides a good foundation for learning and practicing various aspects of data science, from data exploration to model evaluation. Feel free to customize and expand upon it based on your interests and skill level
 
 
 
