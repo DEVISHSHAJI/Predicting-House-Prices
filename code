@@ -1,0 +1,9 @@
+from sklearn.datasets import load_boston
+import pandas as pd
+
+# Load the Boston Housing dataset
+boston = load_boston()
+
+# Create a DataFrame for easy manipulation
+data = pd.DataFrame(boston.data, columns=boston.feature_names)
+data['target'] = boston.target
