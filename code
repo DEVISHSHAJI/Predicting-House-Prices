@@ -1,69 +1,25 @@
-# Import necessary libraries
-import numpy as np
 import pandas as pd
-from sklearn.datasets import load_boston
-from sklearn.model_selection import train_test_split, GridSearchCV
+import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
-from sklearn.inspection import permutation_importance
-from flask import Flask, request, jsonify
-import joblib
 
-# Load the Boston Housing dataset
-boston = load_boston()
-data = pd.DataFrame(boston.data, columns=boston.feature_names)
-data['target'] = boston.target
-
-# Data exploration and preprocessing (add your code here)
-
-# Feature selection (add your code here)
-
-# Split the data into features (X) and target variable (y)
-X = data.drop('target', axis=1)
-y = data['target']
+# Load the Boston housing dataset from the original source
+data_url = "http://lib.stat.cmu.edu/datasets/boston"
+raw_df = pd.read_csv(data_url, sep=r"\s+", skiprows=22, header=None)
+data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+target = raw_df.values[1::2, 2]
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(data, target, test_size=0.2, random_state=42)
 
-# Build a Random Forest Regression model with hyperparameter tuning
-param_grid = {
-    'n_estimators': [50, 100, 200],
-    'max_depth': [None, 10, 20],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4]
-}
+# Train a RandomForestRegressor model
+model = RandomForestRegressor()
+model.fit(X_train, y_train)
 
-rf_model = RandomForestRegressor(random_state=42)
-grid_search = GridSearchCV(estimator=rf_model, param_grid=param_grid, cv=5, scoring='neg_mean_squared_error')
-grid_search.fit(X_train, y_train)
+# Make predictions on the test set
+y_pred = model.predict(X_test)
 
-# Get the best model from the grid search
-best_model = grid_search.best_estimator_
-
-# Evaluate the best model on the test set
-y_pred = best_model.predict(X_test)
+# Evaluate the model
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
-
-# Save the best trained model
-joblib.dump(best_model, 'housing_price_model.joblib')
-
-# Feature importance analysis using permutation importance
-perm_importance = permutation_importance(best_model, X_test, y_test, n_repeats=30, random_state=42)
-feature_importance_df = pd.DataFrame({'Feature': X_test.columns, 'Importance': perm_importance.importances_mean})
-feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
-print('Feature Importance:')
-print(feature_importance_df)
-
-# Deployment - Flask API
-app = Flask(__name__)
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json(force=True)
-    features = np.array(data['features']).reshape(1, -1)
-    prediction = best_model.predict(features)[0]
-    return jsonify({'prediction': prediction})
-
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
